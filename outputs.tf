@@ -1,6 +1,6 @@
 output "log_analytics_workspace_id" {
-   value = azurerm_log_analytics_workspace.this["this"].id
-   description = "The ID of the deployedLog Analytics workspace"
+  value       = try(azurerm_log_analytics_workspace.this["this"].id, null)
+  description = "The ID of the deployed Log Analytics workspace"
 }
 
 output "diagnostic_setting_name" {
