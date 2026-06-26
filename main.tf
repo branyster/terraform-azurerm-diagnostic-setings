@@ -8,13 +8,19 @@ terraform {
 }
 
 resource "azurerm_log_analytics_workspace" "this" {
-  for_each = var.deploy_log_analytics_workspace ? toset(["this"]) : toset([])
+  count = var.deploy_log_analytics_workspace ? 1 : 0
 
   name                = "log-${var.environment}-${var.location_short}-${var.common_name}"
   resource_group_name = var.resource_group_name
   location            = var.location
   sku                 = "PerGB2018"
   retention_in_days   = var.retention_in_days
+}
+
+locals {
+  workspace_id = var.deploy_log_analytics_workspace
+    ? azurerm_log_analytics_workspace.this[0].id
+    : var.log_analytics_workspace_resource_id
 }
 
 resource "azurerm_monitor_diagnostic_setting" "this" {
