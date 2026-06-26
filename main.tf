@@ -9,14 +9,13 @@ terraform {
 }
 
 # Creates a log analytics workspace and diagnostic settings for a given resource. The module will create a log analytics workspace if the deploy_log_analytics_workspace variable is set to true. If the variable is set to false, the module will use the log_analytics_workspace_resource_id variable to link to an existing log analytics workspace.
-resource "azurerm_log_analytics_workspace" "this" {
-  for_each = {
-    for s in ["this"] : s => s
-    if var.deploy_log_analytics_workspace == true
-  }
 
+  value       = azurerm_log_analytics_workspace.this["this"].id
+  description = "The ID of the deployed Log Analytics workspace"
+}
+resource "azurerm_log_analytics_workspace" "this" {
   name                = "log-${var.environment}-${var.location_short}-${var.common_name}"
-  resource_group_name = "var.resource_group_name"
+  resource_group_name = var.resource_group_name
   location            = var.location
   sku                 = "PerGB2018"
   retention_in_days   = var.retention_in_days
