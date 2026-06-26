@@ -44,7 +44,6 @@ variable "deploy_log_analytics_workspace" {
 }
 
 variable "log_analytics_workspace_resource_id" {
-  type = string
-  default = null
-  description = "The resource ID of the existing Log Analytics workspace"
+  type        = string
+  description = "Required when deploy_log_analytics_workspace is false"
 }
