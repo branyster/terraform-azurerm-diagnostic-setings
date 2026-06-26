@@ -1,5 +1,5 @@
 output "log_analytics_workspace_id" {
-   value = azurerm_log_analytics_workspace.this.id
+   value = azurerm_log_analytics_workspace.this["this"].id
    description = "The ID of the deployedLog Analytics workspace"
 }
 
