@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = ">= 4.56.0"
-    }
-  }
-}
-
 resource "azurerm_log_analytics_workspace" "this" {
   count = var.deploy_log_analytics_workspace ? 1 : 0
 
