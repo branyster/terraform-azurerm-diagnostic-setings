@@ -1,4 +1,3 @@
-# provider block
 terraform {
   required_providers {
     azurerm = {
@@ -8,12 +7,9 @@ terraform {
   }
 }
 
-# Creates a log analytics workspace and diagnostic settings for a given resource. The module will create a log analytics workspace if the deploy_log_analytics_workspace variable is set to true. If the variable is set to false, the module will use the log_analytics_workspace_resource_id variable to link to an existing log analytics workspace.
-
-  value       = azurerm_log_analytics_workspace.this["this"].id
-  description = "The ID of the deployed Log Analytics workspace"
-}
 resource "azurerm_log_analytics_workspace" "this" {
+  for_each = var.deploy_log_analytics_workspace ? toset(["this"]) : toset([])
+
   name                = "log-${var.environment}-${var.location_short}-${var.common_name}"
   resource_group_name = var.resource_group_name
   location            = var.location
@@ -22,9 +18,12 @@ resource "azurerm_log_analytics_workspace" "this" {
 }
 
 resource "azurerm_monitor_diagnostic_setting" "this" {
-  name                       = "diagsetting-${var.resource_name}"
-  target_resource_id         = var.target_resource_id
-  log_analytics_workspace_id = var.deploy_log_analytics_workspace ? azurerm_log_analytics_workspace.this["this"].id : var.log_analytics_workspace_resource_id
+  name               = "diagsetting-${var.resource_name}"
+  target_resource_id = var.target_resource_id
+
+  log_analytics_workspace_id = var.deploy_log_analytics_workspace
+    ? azurerm_log_analytics_workspace.this["this"].id
+    : var.log_analytics_workspace_resource_id
 
   enabled_log {
     category_group = "alllogs"
