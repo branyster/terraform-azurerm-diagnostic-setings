@@ -21,9 +21,7 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
   name               = "diagsetting-${var.resource_name}"
   target_resource_id = var.target_resource_id
 
-  log_analytics_workspace_id = var.deploy_log_analytics_workspace
-    ? azurerm_log_analytics_workspace.this["this"].id
-    : var.log_analytics_workspace_resource_id
+  log_analytics_workspace_id = local.workspace_id
 
   enabled_log {
     category_group = "alllogs"
