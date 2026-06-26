@@ -1,21 +1,21 @@
 variable "environment" {
   type = string
-  description = "The environment for the resources (e.g., dev, test, prod)"
+  description = "The environment used for the deployment"
 }
 
 variable "location" {
   type = string
-  description = "The location for the resources"        
+  description = "The location used for the deployment"        
 }
 
 variable "location_short" {
   type = string
-  description = "A short name for the location"
+  description = "The short form of the location used for the deployment"
 }
 
 variable "common_name" {
   type = string
-  description = "A common name for the resources"
+  description = "The common name used for the deployment"
 }
 
 variable "retention_in_days" {
@@ -30,17 +30,17 @@ variable "resource_name" {
 
 variable "target_resource_id" {
   type = string
-  description = "The resource ID of the target resource to monitor"
+  description = "Target resource ID of the resource where the diagnostic setting is created"
 }
 
 variable "resource_group_name" {
   type = string
-  description = "The name of the resource group where the resources will be deployed"
+  description = "The name of the resource group"
 }
 
 variable "deploy_log_analytics_workspace" {
   type = bool
-  description = "Whether to deploy a Log Analytics workspace"
+  description = "Enable or disable the creation of a log analytics workspace. If set to false, the log_analytics_workspace_resource_id variable must be provided."
 }
 
 variable "log_analytics_workspace_resource_id" {
