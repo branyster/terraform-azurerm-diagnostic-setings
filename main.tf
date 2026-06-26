@@ -7,10 +7,8 @@ terraform {
   }
 }
 
-output "log_analytics_workspace_id" {
-  value       = try(azurerm_log_analytics_workspace.this["this"].id, null)
-  description = "The ID of the deployed Log Analytics workspace"
-}
+resource "azurerm_log_analytics_workspace" "this" {
+  for_each = var.deploy_log_analytics_workspace ? toset(["this"]) : toset([])
 
   name                = "log-${var.environment}-${var.location_short}-${var.common_name}"
   resource_group_name = var.resource_group_name
