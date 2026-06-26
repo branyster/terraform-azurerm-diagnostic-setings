@@ -47,3 +47,8 @@ variable "log_analytics_workspace_resource_id" {
   type        = string
   description = "Required when deploy_log_analytics_workspace is false"
 }
+
+validation {
+  condition = var.deploy_log_analytics_workspace || var.log_analytics_workspace_resource_id != ""
+  error_message = "You must provide log_analytics_workspace_resource_id when not deploying a workspace."
+}
