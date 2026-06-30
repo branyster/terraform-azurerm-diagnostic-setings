@@ -1,7 +1,5 @@
 locals {
-  workspace_id = var.deploy_log_analytics_workspace
-    ? azurerm_log_analytics_workspace.this[0].id
-    : var.log_analytics_workspace_resource_id
+  workspace_id = var.deploy_log_analytics_workspace ? azurerm_log_analytics_workspace.this[0].id : var.log_analytics_workspace_resource_id
 }
 
 resource "azurerm_log_analytics_workspace" "this" {
